@@ -4,10 +4,18 @@ import com.sourabh.mcsscoffeeservice.model.CoffeeDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Sourabh
+ */
 @RequestMapping("/api/v1/coffee")
 @RestController
 public class CoffeeController {
@@ -19,7 +27,7 @@ public class CoffeeController {
     }
 
     @PostMapping()
-    public ResponseEntity saveNewCoffee(@RequestBody CoffeeDTO coffeeDTO){
+    public ResponseEntity saveNewCoffee(@RequestBody @Validated CoffeeDTO coffeeDTO){
         //todo
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/coffee/"+ coffeeDTO.getId());
@@ -27,7 +35,7 @@ public class CoffeeController {
     }
 
     @PutMapping("/{coffeeId}")
-    public ResponseEntity updateCoffeeById(@PathVariable("coffeeId") UUID coffeeId, @RequestBody CoffeeDTO coffeeDTO){
+    public ResponseEntity updateCoffeeById(@PathVariable("coffeeId") UUID coffeeId, @RequestBody @Validated CoffeeDTO coffeeDTO){
         //todo
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -37,4 +45,5 @@ public class CoffeeController {
     public void deleteCoffee(@PathVariable("coffeeId") UUID coffeeId){
 
     }
+
 }

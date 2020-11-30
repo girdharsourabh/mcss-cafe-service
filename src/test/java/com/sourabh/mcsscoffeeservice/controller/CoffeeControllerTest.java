@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +32,8 @@ class CoffeeControllerTest {
 
     @Test
     void saveNewCoffee() throws Exception {
-        CoffeeDTO coffeeDTO = CoffeeDTO.builder().build();
+        CoffeeDTO coffeeDTO = CoffeeDTO.builder().coffeeName("Sourabh Coffee2").coffeeStyle("Americano")
+                .upc(1212121212121L).price(new BigDecimal("13.25")).build();
         String coffeeDtoJson = objectMapper.writeValueAsString(coffeeDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/coffee")
@@ -42,7 +44,8 @@ class CoffeeControllerTest {
 
     @Test
     void updateCoffeeById() throws Exception {
-        CoffeeDTO coffeeDTO = CoffeeDTO.builder().build();
+        CoffeeDTO coffeeDTO = CoffeeDTO.builder().coffeeName("Sourabh Coffee1").coffeeStyle("Latte")
+                .upc(1212121212121L).price(new BigDecimal("11.25")).build();
         String coffeeDtoJson = objectMapper.writeValueAsString(coffeeDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/coffee/" + UUID.randomUUID().toString())
